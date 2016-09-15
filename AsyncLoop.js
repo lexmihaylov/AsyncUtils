@@ -51,6 +51,8 @@
 
                 this.job = setTimeout(wait.bind(this));
             }.bind(this));
+            
+            return this.promise;
         };
         
         LoopAsync.prototime.done = function() {
