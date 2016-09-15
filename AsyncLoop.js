@@ -52,6 +52,10 @@
                 this.job = setTimeout(wait.bind(this));
             }.bind(this));
         };
+        
+        LoopAsync.prototime.done = function() {
+            this.deferred.resolve();  
+        };
 
         /**
          * Interupt the loop with a type and message.
