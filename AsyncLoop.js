@@ -54,7 +54,12 @@
         };
         
         LoopAsync.prototime.done = function() {
-            this.deferred.resolve();  
+            if(this.job) {
+                clearTimeout(this.job);
+                this.job = null;
+            }
+            
+            this.deferred.resolve();
         };
 
         /**
