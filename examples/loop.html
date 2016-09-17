@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <script type="text/javascript" src="../AsyncUtils.js"></script>
+        
+        <script>
+            var index = 0;
+            
+            AsyncUtils.Loop.until(function() {
+                index++;
+            
+                return index == 10;
+            }).then(function() {
+                console.log(index);
+            });
+        </script>
+    </body>
+</html>

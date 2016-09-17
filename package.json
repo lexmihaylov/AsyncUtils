@@ -1,0 +1,29 @@
+{
+  "name": "async-utils",
+  "version": "1.0.0",
+  "description": "Helper utilities for async operations in javascript",
+  "main": "AsyncUtils.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "make:all": "node make.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lexmihaylov/AsyncLoop.git"
+  },
+  "keywords": [
+    "Async",
+    "Utils",
+    "Concurrency"
+  ],
+  "author": "Alexander Mihaylov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lexmihaylov/AsyncLoop/issues"
+  },
+  "homepage": "https://github.com/lexmihaylov/AsyncLoop#readme",
+  "dependencies": {}
+}

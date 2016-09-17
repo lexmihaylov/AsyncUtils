@@ -1,18 +1,11 @@
-# AsyncLoop
-An asynchronous loop structure utilizing the JavaScript's eventloop
+# AsyncUtils
 
 # Install
 
 Install it form bower:
 
 ```bash
-bower install async-loop
-```
-
-Install from npm:
-
-```bash
-npm install async-loop
+bower install lexm-async-utils
 ```
 
 # Examples
@@ -24,7 +17,7 @@ npm install async-loop
 // loop until the index becomes 10 and then output it
 var index = 0;
 
-LoopAsync.until(function() {
+AsyncUtils.Loop.until(function() {
     index++;
     
     return index == 10;
@@ -39,7 +32,7 @@ LoopAsync.until(function() {
 ```javascript
 // async incrementing index
 var index = 0;
-LoopAsync.unique('inc').until(function() {
+AsyncUtils.Loop.unique('inc').until(function() {
     index ++;
     return index === 10;
 }).then(function() {
@@ -50,7 +43,7 @@ LoopAsync.unique('inc').until(function() {
 
 
 // this will cancel the previous job and create a new one
-LoopAsync.unique('inc').until(function() {
+AsyncUtils.Loop.unique('inc').until(function() {
    index ++;
 });
 ```
@@ -59,7 +52,7 @@ LoopAsync.unique('inc').until(function() {
 
 ```javascript
 var condition = false;
-LoopAsync.until(function(){
+AsyncUtils.Loop.until(function(){
     if(condition === true) {
         this.done();
         return;
@@ -78,14 +71,32 @@ LoopAsync.until(function(){
 ```
 #### Infinite loop
 ```javascript
-Loop.until(function() {
+AsyncUtils.Loop.until(function() {
    // do something 
+});
+```
+
+#### Create a thread
+```javascript
+var thread = new AsyncUtils.Thread(function(arg1, arg2) {
+    // do something in thread
+    console.log(arguments);
+    
+    return '>Result from execution>'
+});
+
+thread.start();
+thread.exec(['arg1', 'arg2']).then(function(result) {
+    console.log(result);
+}).catch(function(e) {
+    // this will be executed if the thread has an error or was terminated before completing
+    console.warn(e);
 });
 ```
 
 # API Reference
 
-## LoopAsync Class
+## AsyncUtils.Loop Class
 
 #### Constructor
 * Parameters
@@ -122,6 +133,18 @@ Loop.until(function() {
 * `Object unique(jobId)` - creates a unique loop that will be terminated if another loop with the same jobId has been started.
     * `String jobId` - a unique jobId
 * `Promise unique(jobId).until(handle, iterations)` - same as `until(handle, iterations)`
+
+
+## AsyncUtils.Thread
+
+#### Constructor
+* `Function handle` - the code that needs to be executed on a separate thread
+
+#### Public methods
+* `Promise exec(params)` - executes the function in a webworker
+    * `Array params` - function input arguments
+* `start()` - starts the webworker
+* `terminate()` - terminates the worker
 
 # Contribution
 
