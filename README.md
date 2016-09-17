@@ -1,5 +1,5 @@
 # AsyncUtils
-
+![alt travis ci](https://travis-ci.org/lexmihaylov/AsyncUtils.svg?branch=master)
 # Install
 
 Install it form bower:
