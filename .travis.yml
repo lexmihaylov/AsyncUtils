@@ -1,1 +1,1 @@
-script: npm make:all
+script: npm install && npm run make:all
