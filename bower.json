@@ -1,0 +1,22 @@
+{
+  "name": "lexm-async-utils",
+  "description": "Helper utilities for async operations in javascript",
+  "main": "AsyncUtils.js",
+  "authors": [
+    "Alexander Mihaylov"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "Async",
+    "Utils",
+    "Concurrency"
+  ],
+  "homepage": "https://github.com/lexmihaylov/AsyncUtils",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

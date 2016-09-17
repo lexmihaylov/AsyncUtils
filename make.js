@@ -3,7 +3,7 @@ var fs = require('fs');
 var LoopJS = fs.readFileSync('src/Loop.js').toString();
 var ThreadJS = fs.readFileSync('src/Thread.js').toString();
 
-var buildFile = fs.readFileSync('src/AsyncUtils.js').toString();
+var buildFile = fs.readFileSync('src/AsyncUtils.template').toString();
 
 buildFile = buildFile.replace(
     '@{{CONTENT}}', 
