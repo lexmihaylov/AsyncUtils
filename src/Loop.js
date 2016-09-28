@@ -23,7 +23,7 @@ var Loop = (function() {
         var iteration = 1;
 
         this.job = setTimeout(function wait() {
-            if(this.handle()){
+            if(this.handle.call(this)){
                 this.done();
 
                 return;

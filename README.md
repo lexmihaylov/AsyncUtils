@@ -94,6 +94,98 @@ thread.exec(['arg1', 'arg2']).then(function(result) {
 });
 ```
 
+#### If - ElseIf - Else
+
+```javascript
+// if -> elseif -> ... -> elseif -> else
+If(function() {
+    return myVar == 'var';
+}).then(function() {
+    console.log('equals "var"');
+}).else(function() {
+    console.log('is NOT equal to "var".');
+    console.log('check if it equals "var1"');
+    
+    return If(function() {
+       return myVar == 'var1'; 
+    });
+}).then(function() {
+    console.log('equals "var1"');
+}).else(function() {
+    console.log('is NOT equal to "var1"');
+    
+    console.log('check if it equals "var2"');
+    
+    return If(function() {
+       return myVar == 'var2'; 
+    });
+}).then(function() {
+    console.log('equals "var2"');
+}).else(function() {
+    console.log('is NOT equal to "var2".');
+    console.log('equals something else');
+});
+
+```
+
+#### Handling list asynchronously 
+
+```javascript
+
+var List = [
+    'item1',
+    'item2',
+    'item3',
+    'test1',
+    'test2',
+    'test3'
+];
+
+
+AsyncUtils.List(List).each(function(item, index) {
+    console.log(index + ': ' + item);
+}).then(function() {
+    console.log('===> List.each');
+    console.log('loop ended');
+});
+
+
+AsyncUtils.List(List).filter(function(item) {
+    return /^test/.test(item);
+}).then(function(newList) {
+    console.log('===> List.filter');
+    console.log(newList);
+});
+
+
+AsyncUtils.List(List).map(function(item, index) {
+    return {
+        key: index,
+        value: item
+    };
+}).then(function(newList) {
+    console.log('===> List.map');
+    console.log(newList);
+});
+
+AsyncUtils.List(List).find(function(item, index) {
+    return item === 'test3';
+}).then(function(match) {
+    console.log('===> List.find');
+    console.log(match);
+});
+
+AsyncUtils.List(List).find(function(item, index) {
+    return item === 'test5';
+}).then(function(match) {
+    console.log('===> List.find');
+    console.log(match);
+}).catch(function() {
+    console.log('===> List.find - not found');
+});
+
+```
+
 # API Reference
 
 ## AsyncUtils.Loop Class
@@ -145,6 +237,19 @@ thread.exec(['arg1', 'arg2']).then(function(result) {
     * `Array params` - function input arguments
 * `start()` - starts the webworker
 * `terminate()` - terminates the worker
+
+## AsyncUtils.List
+#### Parameters
+* `List` - the array that we want to iterate
+#### Public methods
+* `Promise each(handle)` - iterates thru all the elements of a list
+    * `Function handle` - this function will be called ot each iteration
+* `Promise filter(handle)` - filters elements and creates a new array with elements that fullfill a specific condition
+    * `Function handle` - function that will check if an element fullfills a specific condition
+* `Promise map(handle)` - iterates thru an array and creates a new array with augmeted values
+    * `Function handle` - called on every iteration and returns the new array value
+* `Promise find(handle)` - searches for an item that fullfills a condition
+    * `Function handle` - checks for a specific condition
 
 # Contribution
 

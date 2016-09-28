@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <script type="text/javascript" src="../AsyncUtils.js"></script>
+        
+        <script>
+            var List = [
+                'item1',
+                'item2',
+                'item3',
+                'test1',
+                'test2',
+                'test3'
+            ];
+            
+            
+            AsyncUtils.List(List).each(function(item, index) {
+                console.log(index + ': ' + item);
+            }).then(function() {
+                console.log('===> List.each');
+                console.log('loop ended');
+            });
+            
+            
+            AsyncUtils.List(List).filter(function(item) {
+                return /^test/.test(item);
+            }).then(function(newList) {
+                console.log('===> List.filter');
+                console.log(newList);
+            });
+            
+            
+            AsyncUtils.List(List).map(function(item, index) {
+                return {
+                    key: index,
+                    value: item
+                };
+            }).then(function(newList) {
+                console.log('===> List.map');
+                console.log(newList);
+            });
+            
+            AsyncUtils.List(List).find(function(item, index) {
+                return item === 'test3';
+            }).then(function(match) {
+                console.log('===> List.find');
+                console.log(match);
+            });
+            
+            AsyncUtils.List(List).find(function(item, index) {
+                return item === 'test5';
+            }).then(function(match) {
+                console.log('===> List.find');
+                console.log(match);
+            }).catch(function() {
+                console.log('===> List.find - not found');
+            });
+            
+            
+        </script>
+    </body>
+</html>

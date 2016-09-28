@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <script type="text/javascript" src="../AsyncUtils.js"></script>
+        
+        <script>
+            var myVar = {};
+            var If = AsyncUtils.if;
+            
+            // if -> elseif -> ... -> elseif -> else
+            If(function() {
+                return myVar == 'var';
+            }).then(function() {
+                console.log('equals "var"');
+            }).else(function() {
+                console.log('is NOT equal to "var".');
+                console.log('check if it equals "var1"');
+                
+                return If(function() {
+                   return myVar == 'var1'; 
+                });
+            }).then(function() {
+                console.log('equals "var1"');
+            }).else(function() {
+                console.log('is NOT equal to "var1"');
+                
+                console.log('check if it equals "var2"');
+                
+                return If(function() {
+                   return myVar == 'var2'; 
+                });
+            }).then(function() {
+                console.log('equals "var2"');
+            }).else(function() {
+                console.log('is NOT equal to "var2".');
+                console.log('equals something else');
+            });
+        </script>
+    </body>
+</html>
