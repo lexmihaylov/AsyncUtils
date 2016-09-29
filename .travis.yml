@@ -1,1 +1,6 @@
-script: npm install && npm run make:all
+language: node_js
+node_js:
+- "0.11"
+script:
+- npm install 
+- npm run make:all
