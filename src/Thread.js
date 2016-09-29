@@ -1,3 +1,8 @@
+/**
+ * Helper class that will run a function in a separate thread by using webworkers
+ * @class Thread
+ * @param {Function} handle
+ */
 var Thread = (function() {
     
     /**
@@ -26,11 +31,6 @@ var Thread = (function() {
         
     };
     
-    /**
-     * Helper class that will run a function in a separate thread by using webworkers
-     * @constructor
-     * @param {Function} handle
-     */
     var Thread = function(handle) {
         this.handle = "(" + Template.toString().replace('THREAD_HANDLE', handle.toString()) + ")();";
         this.url = null;
@@ -41,6 +41,7 @@ var Thread = (function() {
     
     /**
      * Execute the function
+     * @memberof Thread
      * @param {Array} params function arguments
      * @returns {Promise}
      */
@@ -78,6 +79,7 @@ var Thread = (function() {
     
     /**
      * Start the thread. Creates a new webworker
+     * @memberof Thread
      */
     Thread.prototype.start = function() {
         if(this.worker !== null) {
@@ -92,6 +94,7 @@ var Thread = (function() {
     
     /**
      * terminates the thread and worker
+     * @memberof Thread
      */
     Thread.prototype.terminate = function() {
         this.worker.terminate();

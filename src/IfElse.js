@@ -1,11 +1,16 @@
+/**
+ * Async conditions
+ * @function
+ * @param {Function} condition
+ * @return {ForkPromiseProxy}
+ */
 var If = (function() {
+    /**
+     * Proxy class for handling promises
+     * @class ForkPromiseProxy
+     */
     var ForkPromiseProxy = (function() {
-        /**
-         * Proxy class for handling promises
-         * @constructor
-         * @private
-         */
-        var self = function(promise) {
+        var ForkPromiseProxy = function(promise) {
             this.promise = promise;
             
             this.thenHandle = function() {};
@@ -19,7 +24,7 @@ var If = (function() {
                     returns = this.resolve('else');
                 }
                 
-                if(returns instanceof self) {
+                if(returns instanceof ForkPromiseProxy) {
                     returns = returns.promise;
                 }
                 
@@ -30,22 +35,23 @@ var If = (function() {
         /**
          * When the promise resolves it should call this method
          * to handle the if else statements
-         * 
+         * @memberof ForkPromiseProxy
          * @param {String} type 'then' or 'else' types
          * 
          * @returns {?}
          */
-        self.prototype.resolve = function(type) {
+        ForkPromiseProxy.prototype.resolve = function(type) {
             return this[type + 'Handle']();
         };
         
         /**
          * sets the handle function for a true conditions
+         * @memberof ForkPromiseProxy
          * @param {Function} handle
          * 
          * @returns {ForkPromiseProxy}
          */ 
-        self.prototype.then = function(handle) {
+        ForkPromiseProxy.prototype.then = function(handle) {
             this.thenHandle = handle;
             
             return this;
@@ -53,17 +59,18 @@ var If = (function() {
         
         /**
          * sets the handle function for a false condition
+         * @memberof ForkPromiseProxy
          * @param {Function} handle
          * 
          * @returns {ForkPromiseProxy}
          */
-        self.prototype.else = function(handle) {
+        ForkPromiseProxy.prototype.else = function(handle) {
             this.elseHandle = handle;
             
-            return new self(this.next);
+            return new ForkPromiseProxy(this.next);
         };
         
-        return self;
+        return ForkPromiseProxy;
     }());
     
     /**

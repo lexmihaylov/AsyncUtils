@@ -1,3 +1,9 @@
+/**
+ * Async loop class that takes a handle as a parameter and a maximum number of iterations
+ * @param {Function} handle
+ * @param {Number} iterations
+ * @class Loop
+ */
 var Loop = (function() {
     /**
      * Async loop class that takes a handle as a parameter and a maximum number of iterations
@@ -18,6 +24,7 @@ var Loop = (function() {
 
     /**
      * Starts the loop
+     * @memberof Loop
      */
     Loop.prototype.start = function() {
         var iteration = 1;
@@ -42,7 +49,10 @@ var Loop = (function() {
         
         return this.promise;
     };
-    
+    /**
+     * stops the loop normally
+     * @memberof Loop
+     */
     Loop.prototype.done = function() {
         if(this.job) {
             clearTimeout(this.job);
@@ -55,6 +65,7 @@ var Loop = (function() {
     /**
      * Interupt the loop with a type and message.
      * This will call the reject callback on the promise.
+     * @memberof Loop
      * @param  {String} type
      * @param  {String} message
      */
@@ -71,6 +82,7 @@ var Loop = (function() {
 
     /**
      * Cancel the loop and provide a reason message
+     * @memberof Loop
      * @param  {String} message
      */
     Loop.prototype.cancel = function(message) {
@@ -79,6 +91,7 @@ var Loop = (function() {
 
     /**
      * Kill the loop and provide a reason message
+     * @memberof Loop
      * @param  {String} message
      */
     Loop.prototype.kill = function(message) {
@@ -87,6 +100,7 @@ var Loop = (function() {
 
     /**
      * Loop until the handle function returns true 
+     * @memberof Loop
      * @static
      * @param  {Function} handle
      * @param  {Number} iterations
@@ -105,6 +119,7 @@ var Loop = (function() {
         /**
          * Creates a unique loop task that will terminate when another task with 
          * the same id starts
+         * @memberof Loop
          * @static
          * @param {String} id
          * @return {Object}

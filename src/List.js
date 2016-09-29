@@ -1,24 +1,30 @@
-/* requires Loop */
-/* global Loop */
+
+/**
+ * takes a list and returns a List handler instance
+ * @param {Array} list
+ * @function
+ * @returns {ListHandler}
+ */
 var List = (function() {
-    var List = (function() {
-        /**
-         * Async array usage
-         * @param {Array} list
-         * @constructor
-         * @private
-         */
-        var self = function(list) {
+    /**
+     * Async array usage
+     * @class ListHandler
+     * @param {Array} list
+     */
+    var ListHandler = (function() {
+        
+        var ListHandler = function(list) {
             this.list = list;
         };
         
         /**
          * Filter an array and return a new array with the filtered values
+         * @memberof ListHandler
          * @param {Function} condition
          * 
          * @returns {Promise}
          */
-        self.prototype.filter = function(condition) {
+        ListHandler.prototype.filter = function(condition) {
             var promise = new Promise(function(resolve, reject) {
                 var newIndex = 0;
                 var newList = [];
@@ -37,11 +43,11 @@ var List = (function() {
         
         /**
          * Iterate thru a list
-         * 
+         * @memberof ListHandler
          * @param {Function} handle
          * @return {Promise}
          */
-        self.prototype.each = function(handle) {
+        ListHandler.prototype.each = function(handle) {
             var index = 0;
             var _this = this;
             return Loop.until(function() {
@@ -55,11 +61,12 @@ var List = (function() {
         
         /**
          * Itarate thru the list and create a new array with augmentet values
+         * @memberof ListHandler
          * @param {Function} handle
          * 
          * @returns {Promise}
          */
-        self.prototype.map = function(handle) {
+        ListHandler.prototype.map = function(handle) {
             var promise = new Promise(function(resolve, reject) {
                 var newIndex = 0;
                 var newList = [];
@@ -76,12 +83,12 @@ var List = (function() {
         
         /**
          * Find a specific elemnet inside a list
-         * 
+         * @memberof ListHandler
          * @param {Function} condition
          * 
          * @returns {Promise}
          */
-        self.prototype.find = function(condition) {
+        ListHandler.prototype.find = function(condition) {
             var resolved = false;
             var promise = new Promise(function(resolve, reject) {
                 this.each(function(item, index) {
@@ -100,7 +107,7 @@ var List = (function() {
             return promise;
         };
         
-        return self;
+        return ListHandler;
     }());
     
     /**
@@ -109,6 +116,6 @@ var List = (function() {
      * @returns {List}
      */
     return function(list) {
-        return new List(list);
+        return new ListHandler(list);
     };
 }());

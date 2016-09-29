@@ -58,6 +58,12 @@ var async = function(fn) {
     };
 };
 
+/**
+ * Async loop class that takes a handle as a parameter and a maximum number of iterations
+ * @param {Function} handle
+ * @param {Number} iterations
+ * @class Loop
+ */
 var Loop = (function() {
     /**
      * Async loop class that takes a handle as a parameter and a maximum number of iterations
@@ -78,6 +84,7 @@ var Loop = (function() {
 
     /**
      * Starts the loop
+     * @memberof Loop
      */
     Loop.prototype.start = function() {
         var iteration = 1;
@@ -102,7 +109,10 @@ var Loop = (function() {
         
         return this.promise;
     };
-    
+    /**
+     * stops the loop normally
+     * @memberof Loop
+     */
     Loop.prototype.done = function() {
         if(this.job) {
             clearTimeout(this.job);
@@ -115,6 +125,7 @@ var Loop = (function() {
     /**
      * Interupt the loop with a type and message.
      * This will call the reject callback on the promise.
+     * @memberof Loop
      * @param  {String} type
      * @param  {String} message
      */
@@ -131,6 +142,7 @@ var Loop = (function() {
 
     /**
      * Cancel the loop and provide a reason message
+     * @memberof Loop
      * @param  {String} message
      */
     Loop.prototype.cancel = function(message) {
@@ -139,6 +151,7 @@ var Loop = (function() {
 
     /**
      * Kill the loop and provide a reason message
+     * @memberof Loop
      * @param  {String} message
      */
     Loop.prototype.kill = function(message) {
@@ -147,6 +160,7 @@ var Loop = (function() {
 
     /**
      * Loop until the handle function returns true 
+     * @memberof Loop
      * @static
      * @param  {Function} handle
      * @param  {Number} iterations
@@ -165,6 +179,7 @@ var Loop = (function() {
         /**
          * Creates a unique loop task that will terminate when another task with 
          * the same id starts
+         * @memberof Loop
          * @static
          * @param {String} id
          * @return {Object}
@@ -190,6 +205,11 @@ var Loop = (function() {
     return Loop;
 }());
 
+/**
+ * Helper class that will run a function in a separate thread by using webworkers
+ * @class Thread
+ * @param {Function} handle
+ */
 var Thread = (function() {
     
     /**
@@ -218,11 +238,6 @@ var Thread = (function() {
         
     };
     
-    /**
-     * Helper class that will run a function in a separate thread by using webworkers
-     * @constructor
-     * @param {Function} handle
-     */
     var Thread = function(handle) {
         this.handle = "(" + Template.toString().replace('THREAD_HANDLE', handle.toString()) + ")();";
         this.url = null;
@@ -233,6 +248,7 @@ var Thread = (function() {
     
     /**
      * Execute the function
+     * @memberof Thread
      * @param {Array} params function arguments
      * @returns {Promise}
      */
@@ -270,6 +286,7 @@ var Thread = (function() {
     
     /**
      * Start the thread. Creates a new webworker
+     * @memberof Thread
      */
     Thread.prototype.start = function() {
         if(this.worker !== null) {
@@ -284,6 +301,7 @@ var Thread = (function() {
     
     /**
      * terminates the thread and worker
+     * @memberof Thread
      */
     Thread.prototype.terminate = function() {
         this.worker.terminate();
@@ -300,6 +318,8 @@ var Thread = (function() {
 
 /**
  * takes a function, spawns a webworker and executes that function inside the webworker
+ * @param {Function} fn
+ * @returns {Promise}
  */
 var threaded = function(fn) {
     return function() {
@@ -324,27 +344,33 @@ var threaded = function(fn) {
     };
 };
 
-/* requires Loop */
-/* global Loop */
+
+/**
+ * takes a list and returns a List handler instance
+ * @param {Array} list
+ * @function
+ * @returns {ListHandler}
+ */
 var List = (function() {
-    var List = (function() {
-        /**
-         * Async array usage
-         * @param {Array} list
-         * @constructor
-         * @private
-         */
-        var self = function(list) {
+    /**
+     * Async array usage
+     * @class ListHandler
+     * @param {Array} list
+     */
+    var ListHandler = (function() {
+        
+        var ListHandler = function(list) {
             this.list = list;
         };
         
         /**
          * Filter an array and return a new array with the filtered values
+         * @memberof ListHandler
          * @param {Function} condition
          * 
          * @returns {Promise}
          */
-        self.prototype.filter = function(condition) {
+        ListHandler.prototype.filter = function(condition) {
             var promise = new Promise(function(resolve, reject) {
                 var newIndex = 0;
                 var newList = [];
@@ -363,11 +389,11 @@ var List = (function() {
         
         /**
          * Iterate thru a list
-         * 
+         * @memberof ListHandler
          * @param {Function} handle
          * @return {Promise}
          */
-        self.prototype.each = function(handle) {
+        ListHandler.prototype.each = function(handle) {
             var index = 0;
             var _this = this;
             return Loop.until(function() {
@@ -381,11 +407,12 @@ var List = (function() {
         
         /**
          * Itarate thru the list and create a new array with augmentet values
+         * @memberof ListHandler
          * @param {Function} handle
          * 
          * @returns {Promise}
          */
-        self.prototype.map = function(handle) {
+        ListHandler.prototype.map = function(handle) {
             var promise = new Promise(function(resolve, reject) {
                 var newIndex = 0;
                 var newList = [];
@@ -402,12 +429,12 @@ var List = (function() {
         
         /**
          * Find a specific elemnet inside a list
-         * 
+         * @memberof ListHandler
          * @param {Function} condition
          * 
          * @returns {Promise}
          */
-        self.prototype.find = function(condition) {
+        ListHandler.prototype.find = function(condition) {
             var resolved = false;
             var promise = new Promise(function(resolve, reject) {
                 this.each(function(item, index) {
@@ -426,7 +453,7 @@ var List = (function() {
             return promise;
         };
         
-        return self;
+        return ListHandler;
     }());
     
     /**
@@ -435,18 +462,23 @@ var List = (function() {
      * @returns {List}
      */
     return function(list) {
-        return new List(list);
+        return new ListHandler(list);
     };
 }());
 
+/**
+ * Async conditions
+ * @function
+ * @param {Function} condition
+ * @return {ForkPromiseProxy}
+ */
 var If = (function() {
+    /**
+     * Proxy class for handling promises
+     * @class ForkPromiseProxy
+     */
     var ForkPromiseProxy = (function() {
-        /**
-         * Proxy class for handling promises
-         * @constructor
-         * @private
-         */
-        var self = function(promise) {
+        var ForkPromiseProxy = function(promise) {
             this.promise = promise;
             
             this.thenHandle = function() {};
@@ -460,7 +492,7 @@ var If = (function() {
                     returns = this.resolve('else');
                 }
                 
-                if(returns instanceof self) {
+                if(returns instanceof ForkPromiseProxy) {
                     returns = returns.promise;
                 }
                 
@@ -471,22 +503,23 @@ var If = (function() {
         /**
          * When the promise resolves it should call this method
          * to handle the if else statements
-         * 
+         * @memberof ForkPromiseProxy
          * @param {String} type 'then' or 'else' types
          * 
          * @returns {?}
          */
-        self.prototype.resolve = function(type) {
+        ForkPromiseProxy.prototype.resolve = function(type) {
             return this[type + 'Handle']();
         };
         
         /**
          * sets the handle function for a true conditions
+         * @memberof ForkPromiseProxy
          * @param {Function} handle
          * 
          * @returns {ForkPromiseProxy}
          */ 
-        self.prototype.then = function(handle) {
+        ForkPromiseProxy.prototype.then = function(handle) {
             this.thenHandle = handle;
             
             return this;
@@ -494,17 +527,18 @@ var If = (function() {
         
         /**
          * sets the handle function for a false condition
+         * @memberof ForkPromiseProxy
          * @param {Function} handle
          * 
          * @returns {ForkPromiseProxy}
          */
-        self.prototype.else = function(handle) {
+        ForkPromiseProxy.prototype.else = function(handle) {
             this.elseHandle = handle;
             
-            return new self(this.next);
+            return new ForkPromiseProxy(this.next);
         };
         
-        return self;
+        return ForkPromiseProxy;
     }());
     
     /**

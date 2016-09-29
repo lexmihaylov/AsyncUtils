@@ -1,5 +1,7 @@
 /**
  * takes a function, spawns a webworker and executes that function inside the webworker
+ * @param {Function} fn
+ * @returns {Promise}
  */
 var threaded = function(fn) {
     return function() {

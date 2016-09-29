@@ -44,10 +44,18 @@ childProcess.exec('node_modules/.bin/uglifyjs AsyncUtils.js -o AsyncUtils.min.js
 });
 
 
-
 childProcess.exec('node_modules/.bin/jshint AsyncUtils.js', function(err, setdout) {
     console.log('Running jsHint ...')
     console.log(setdout);
+    if(err) {
+        throw err;
+    }
+    console.log("Done\n");
+});
+
+childProcess.exec('node_modules/.bin/jsdoc2md src/*.js > API.md', function(err, stdout) {
+    console.log('Generating docs ...');
+    console.log(stdout);
     if(err) {
         throw err;
     }
