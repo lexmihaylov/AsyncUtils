@@ -15,11 +15,11 @@ var Thread = (function() {
                         type: 'result',
                         data: result
                     });
-                } catch(e) {
+                } catch(ex) {
                     self.postMessage({
                         type: 'error',
-                        data: e
-                    })
+                        data: ex
+                    });
                 }
                 
             }
@@ -46,7 +46,7 @@ var Thread = (function() {
      * @returns {Promise}
      */
     Thread.prototype.exec = function(params) {
-        var params = params || [];
+        params = params || [];
         
         this.promise = new Promise(function(resolve, reject) {
             this.deferred = {
@@ -61,7 +61,7 @@ var Thread = (function() {
         });
         
         this.worker.onmessage = function(e) {
-            var msg = e.data
+            var msg = e.data;
             switch (msg.type) {
                 case 'result':
                     this.deferred.resolve(msg.data);
@@ -75,7 +75,7 @@ var Thread = (function() {
         }.bind(this);
         
         return this.promise;
-    }
+    };
     
     /**
      * Start the thread. Creates a new webworker

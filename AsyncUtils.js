@@ -7,6 +7,34 @@
         root.AsyncUtils = factory();
     }
 })(this, function() {
+if (!Function.prototype.bind) {
+  Function.prototype.bind = function(oThis) {
+    if (typeof this !== 'function') {
+      // closest thing possible to the ECMAScript 5
+      // internal IsCallable function
+      throw new TypeError('Function.prototype.bind - what is trying to be bound is not callable');
+    }
+
+    var aArgs   = Array.prototype.slice.call(arguments, 1),
+        fToBind = this,
+        fNOP    = function() {},
+        fBound  = function() {
+          return fToBind.apply(this instanceof fNOP ?
+                 this :
+                 oThis,
+                 aArgs.concat(Array.prototype.slice.call(arguments)));
+        };
+
+    if (this.prototype) {
+      // Function.prototype doesn't have a prototype property
+      fNOP.prototype = this.prototype; 
+    }
+    fBound.prototype = new fNOP();
+
+    return fBound;
+  };
+}
+
 var Loop = (function() {
     /**
      * Async loop class that takes a handle as a parameter and a maximum number of iterations
@@ -156,11 +184,11 @@ var Thread = (function() {
                         type: 'result',
                         data: result
                     });
-                } catch(e) {
+                } catch(ex) {
                     self.postMessage({
                         type: 'error',
-                        data: e
-                    })
+                        data: ex
+                    });
                 }
                 
             }
@@ -187,7 +215,7 @@ var Thread = (function() {
      * @returns {Promise}
      */
     Thread.prototype.exec = function(params) {
-        var params = params || [];
+        params = params || [];
         
         this.promise = new Promise(function(resolve, reject) {
             this.deferred = {
@@ -202,7 +230,7 @@ var Thread = (function() {
         });
         
         this.worker.onmessage = function(e) {
-            var msg = e.data
+            var msg = e.data;
             switch (msg.type) {
                 case 'result':
                     this.deferred.resolve(msg.data);
@@ -216,7 +244,7 @@ var Thread = (function() {
         }.bind(this);
         
         return this.promise;
-    }
+    };
     
     /**
      * Start the thread. Creates a new webworker
@@ -348,7 +376,7 @@ var List = (function() {
             }.bind(this));
             
             return promise;
-        }
+        };
         
         return self;
     }());

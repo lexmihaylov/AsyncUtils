@@ -7,7 +7,7 @@
     "example": "examples"
   },
   "scripts": {
-    "make:all": "node make.js",
+    "make:all": "node Makefile.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -25,5 +25,8 @@
     "url": "https://github.com/lexmihaylov/AsyncLoop/issues"
   },
   "homepage": "https://github.com/lexmihaylov/AsyncLoop#readme",
-  "dependencies": {}
+  "dependencies": {
+    "jshint": "^2.9.3",
+    "uglify-js": "^2.7.3"
+  }
 }

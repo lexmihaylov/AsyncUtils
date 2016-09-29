@@ -1,5 +1,8 @@
 # AsyncUtils
 ![alt travis ci](https://travis-ci.org/lexmihaylov/AsyncUtils.svg?branch=master)
+
+This library relies heavily on promises so for older browsers that do not support native promises use a polyfill.
+Suggestion: https://github.com/taylorhakes/promise-polyfill
 # Install
 
 Install it form bower:
@@ -98,7 +101,7 @@ thread.exec(['arg1', 'arg2']).then(function(result) {
 
 ```javascript
 // if -> elseif -> ... -> elseif -> else
-If(function() {
+AsyncUtils.if(function() {
     return myVar == 'var';
 }).then(function() {
     console.log('equals "var"');
@@ -106,7 +109,7 @@ If(function() {
     console.log('is NOT equal to "var".');
     console.log('check if it equals "var1"');
     
-    return If(function() {
+    return AsyncUtils.if(function() {
        return myVar == 'var1'; 
     });
 }).then(function() {
@@ -116,7 +119,7 @@ If(function() {
     
     console.log('check if it equals "var2"');
     
-    return If(function() {
+    return AsyncUtils.if(function() {
        return myVar == 'var2'; 
     });
 }).then(function() {

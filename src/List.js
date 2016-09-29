@@ -98,7 +98,7 @@ var List = (function() {
             }.bind(this));
             
             return promise;
-        }
+        };
         
         return self;
     }());
