@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <script type="text/javascript" src="../AsyncUtils.js"></script>
+        
+        <script>
+            var printSomething = AsyncUtils.async(function(something) {
+                console.log(something);
+            });
+            
+            printSomething('Hello, World');
+            
+            console.log('this will be executed before `printSomething`');
+        </script>
+    </body>
+</html>

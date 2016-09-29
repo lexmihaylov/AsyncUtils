@@ -35,6 +35,16 @@ if (!Function.prototype.bind) {
   };
 }
 
+var async = function(fn) {
+    return function() {
+        var _arguments = arguments;
+        var _this = this;
+        setTimeout(function() {
+            fn.apply(_this, _arguments);
+        });
+    };
+};
+
 var Loop = (function() {
     /**
      * Async loop class that takes a handle as a parameter and a maximum number of iterations
@@ -483,7 +493,8 @@ return {
     Loop: Loop,
     Thread: Thread,
     List: List,
-    if: If
+    if: If,
+    async: async
 };
 
 });
