@@ -7,8 +7,16 @@ var async = function(fn) {
     return function() {
         var _arguments = arguments;
         var _this = this;
-        setTimeout(function() {
-            fn.apply(_this, _arguments);
+        var promise = new Promise(function(resolve, reject) {
+            setTimeout(function() {
+                try {
+                    resolve(fn.apply(_this, _arguments));
+                } catch(ex) {
+                    reject(ex);
+                }
+            });
         });
+        
+        return promise;
     };
 };

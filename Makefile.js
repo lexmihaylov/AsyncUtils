@@ -6,6 +6,7 @@ var bindPolyfill = fs.readFileSync('src/bind-polyfill.js').toString();
 var async = fs.readFileSync('src/async-function.js').toString();
 var LoopJS = fs.readFileSync('src/Loop.js').toString();
 var ThreadJS = fs.readFileSync('src/Thread.js').toString();
+var threaded = fs.readFileSync('src/threaded-function.js').toString();
 var List = fs.readFileSync('src/List.js').toString();
 var IfElse = fs.readFileSync('src/IfElse.js').toString();
 
@@ -17,6 +18,7 @@ buildFile = buildFile.replace(
     async + "\n\n" +
     LoopJS + "\n\n" +
     ThreadJS + "\n\n" +
+    threaded + "\n\n" +
     List + "\n\n" +
     IfElse + "\n\n" +
     "return {\n" +
@@ -24,7 +26,8 @@ buildFile = buildFile.replace(
     "    Thread: Thread,\n" +
     "    List: List,\n" +
     "    if: If,\n" +
-    "    async: async\n" +
+    "    async: async,\n" +
+    "    threaded: threaded\n" +
     "};\n"
 );
 

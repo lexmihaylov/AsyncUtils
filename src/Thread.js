@@ -6,7 +6,6 @@ var Thread = (function() {
     var Template = function() {
         self.onmessage = function(e) {
             var msg = e.data;
-            var params = [];
             
             if(msg.type === 'exec') {
                 try {
@@ -57,7 +56,7 @@ var Thread = (function() {
         
         this.worker.postMessage({
             type: 'exec',
-            data: this.params
+            data: params
         });
         
         this.worker.onmessage = function(e) {

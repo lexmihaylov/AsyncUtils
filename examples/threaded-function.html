@@ -4,10 +4,12 @@
         <script type="text/javascript" src="../AsyncUtils.js"></script>
         
         <script>
-            var printSomething = AsyncUtils.async(function(something) {
+            var printSomething = AsyncUtils.threaded(function(something) {
+                var i = 0;
+                while(i <= 10000000000) {i++;} // this will not block the ui because it run inside a worker
                 console.log(something);
                 
-                return 'executed';
+                return 'executed in a thread';
             });
             
             printSomething('Hello, World').then(function(val) {

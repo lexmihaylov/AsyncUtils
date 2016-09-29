@@ -44,9 +44,17 @@ var async = function(fn) {
     return function() {
         var _arguments = arguments;
         var _this = this;
-        setTimeout(function() {
-            fn.apply(_this, _arguments);
+        var promise = new Promise(function(resolve, reject) {
+            setTimeout(function() {
+                try {
+                    resolve(fn.apply(_this, _arguments));
+                } catch(ex) {
+                    reject(ex);
+                }
+            });
         });
+        
+        return promise;
     };
 };
 
@@ -190,7 +198,6 @@ var Thread = (function() {
     var Template = function() {
         self.onmessage = function(e) {
             var msg = e.data;
-            var params = [];
             
             if(msg.type === 'exec') {
                 try {
@@ -241,7 +248,7 @@ var Thread = (function() {
         
         this.worker.postMessage({
             type: 'exec',
-            data: this.params
+            data: params
         });
         
         this.worker.onmessage = function(e) {
@@ -290,6 +297,32 @@ var Thread = (function() {
     
     return Thread;
 }());
+
+/**
+ * takes a function, spawns a webworker and executes that function inside the webworker
+ */
+var threaded = function(fn) {
+    return function() {
+        var thread = new Thread(fn);
+        var _arguments = Array.prototype.slice.call(arguments);
+        
+        thread.start();
+        var promise = new Promise(function(resolve, reject) {
+            thread.exec(_arguments).
+                then(function(result) {
+                    resolve(result);
+                    thread.terminate();
+                }).
+                catch(function(ex) {
+                    reject(ex);
+                    thread.terminate();
+                });
+        });
+        
+        
+        return promise;
+    };
+};
 
 /* requires Loop */
 /* global Loop */
@@ -499,7 +532,8 @@ return {
     Thread: Thread,
     List: List,
     if: If,
-    async: async
+    async: async,
+    threaded: threaded
 };
 
 });

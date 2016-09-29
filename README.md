@@ -131,7 +131,7 @@ AsyncUtils.if(function() {
 
 ```
 
-#### Handling list asynchronously 
+#### Handling lists asynchronously 
 
 ```javascript
 
@@ -187,6 +187,38 @@ AsyncUtils.List(List).find(function(item, index) {
     console.log('===> List.find - not found');
 });
 
+```
+
+#### Async Functions
+```javascript
+var printSomething = AsyncUtils.async(function(something) {
+    console.log(something);
+    
+    return 'executed';
+});
+
+printSomething('Hello, World').then(function(val) {
+    console.log(val);
+});
+
+console.log('this will be executed before `printSomething`');
+```
+
+#### Threaded Functions
+```javascript
+var printSomething = AsyncUtils.threaded(function(something) {
+    var i = 0;
+    while(i <= 10000000000) {i++;} // this will not block the ui because it run inside a worker
+    console.log(something);
+    
+    return 'executed in a thread';
+});
+
+printSomething('Hello, World').then(function(val) {
+    console.log(val);
+});
+
+console.log('this will be executed before `printSomething`');
 ```
 
 # API Reference
