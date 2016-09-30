@@ -1,3 +1,18 @@
+---
+engines:
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - javascript
+  eslint:
+    enabled: true
+  fixme:
+    enabled: true
+ratings:
+  paths:
+  - "**.js"
 exclude_paths:
-- "AsyncUtils.js"
-- "AsyncUtils.min.js"
+- tests/
+- AsyncUtils.js
+- AsyncUtils.min.js
