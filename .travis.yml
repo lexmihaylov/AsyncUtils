@@ -4,3 +4,4 @@ node_js:
 script:
 - npm install 
 - npm run make:all
+- npm run tests
