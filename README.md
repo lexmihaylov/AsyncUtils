@@ -3,6 +3,14 @@
 
 This library relies heavily on promises so for older browsers that do not support native promises use a polyfill.
 Suggestion: https://github.com/taylorhakes/promise-polyfill
+# Build
+
+```bash
+npm install
+npm run make:all
+npm run tests
+```
+
 # Install
 
 Install it form bower:
