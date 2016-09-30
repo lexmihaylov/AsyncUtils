@@ -1,6 +1,5 @@
 /**
  * Async conditions
- * @function
  * @param {Function} condition
  * @return {ForkPromiseProxy}
  */

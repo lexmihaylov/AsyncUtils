@@ -22,7 +22,10 @@ var Thread = (function() {
                 } catch(ex) {
                     self.postMessage({
                         type: 'error',
-                        data: ex
+                        data: {
+            				message: ex.message,
+            				stack: ex.stack
+            			}
                     });
                 }
                 

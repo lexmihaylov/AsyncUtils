@@ -11,12 +11,17 @@
 <dd></dd>
 </dl>
 
+## Members
+
+<dl>
+<dt><a href="#If">If</a> ⇒ <code><a href="#ForkPromiseProxy">ForkPromiseProxy</a></code></dt>
+<dd><p>Async conditions</p>
+</dd>
+</dl>
+
 ## Functions
 
 <dl>
-<dt><a href="#If">If(condition)</a> ⇒ <code><a href="#ForkPromiseProxy">ForkPromiseProxy</a></code></dt>
-<dd><p>Async conditions</p>
-</dd>
 <dt><a href="#List">List(list)</a> ⇒ <code><a href="#ListHandler">ListHandler</a></code></dt>
 <dd><p>takes a list and returns a List handler instance</p>
 </dd>
@@ -289,10 +294,10 @@ terminates the thread and worker
 **Kind**: instance method of <code>[Thread](#Thread)</code>  
 <a name="If"></a>
 
-## If(condition) ⇒ <code>[ForkPromiseProxy](#ForkPromiseProxy)</code>
+## If ⇒ <code>[ForkPromiseProxy](#ForkPromiseProxy)</code>
 Async conditions
 
-**Kind**: global function  
+**Kind**: global variable  
 
 | Param | Type |
 | --- | --- |

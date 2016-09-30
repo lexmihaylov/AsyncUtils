@@ -229,7 +229,10 @@ var Thread = (function() {
                 } catch(ex) {
                     self.postMessage({
                         type: 'error',
-                        data: ex
+                        data: {
+            				message: ex.message,
+            				stack: ex.stack
+            			}
                     });
                 }
                 
@@ -315,6 +318,7 @@ var Thread = (function() {
     
     return Thread;
 }());
+
 
 /**
  * takes a function, spawns a webworker and executes that function inside the webworker
@@ -468,7 +472,6 @@ var List = (function() {
 
 /**
  * Async conditions
- * @function
  * @param {Function} condition
  * @return {ForkPromiseProxy}
  */
