@@ -1,5 +1,7 @@
 # AsyncUtils
-![alt travis ci](https://travis-ci.org/lexmihaylov/AsyncUtils.svg?branch=master) [![HitCount](https://hitt.herokuapp.com/lexmihaylov/AsyncUtils.svg)](https://github.com/lexmihaylov/AsyncUtils)
+![alt travis ci](https://travis-ci.org/lexmihaylov/AsyncUtils.svg?branch=master)
+[![Code Climate](https://codeclimate.com/github/lexmihaylov/AsyncUtils/badges/gpa.svg)](https://codeclimate.com/github/lexmihaylov/AsyncUtils)
+[![HitCount](https://hitt.herokuapp.com/lexmihaylov/AsyncUtils.svg)](https://github.com/lexmihaylov/AsyncUtils)
 
 This library relies heavily on promises so for older browsers that do not support native promises use a polyfill.
 Suggestion: https://github.com/taylorhakes/promise-polyfill
