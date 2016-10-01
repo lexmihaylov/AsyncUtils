@@ -9,8 +9,8 @@ Suggestion: https://github.com/taylorhakes/promise-polyfill
 
 ```bash
 npm install
-npm run make:all
-npm run tests
+jake
+jake test
 ```
 
 # Install

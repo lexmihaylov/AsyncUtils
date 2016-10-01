@@ -23,9 +23,9 @@ var Thread = (function() {
                     self.postMessage({
                         type: 'error',
                         data: {
-            				message: ex.message,
-            				stack: ex.stack
-            			}
+                            message: ex.message,
+                            stack: ex.stack
+                        }
                     });
                 }
                 
