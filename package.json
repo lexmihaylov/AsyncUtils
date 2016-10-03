@@ -1,6 +1,6 @@
 {
   "name": "async-utils",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Helper utilities for async operations in javascript",
   "main": "AsyncUtils.js",
   "directories": {
