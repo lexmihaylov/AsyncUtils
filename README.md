@@ -1,4 +1,6 @@
 # AsyncUtils
+Async utilities for the browser.
+
 ![alt travis ci](https://travis-ci.org/lexmihaylov/AsyncUtils.svg?branch=master)
 [![Code Climate](https://codeclimate.com/github/lexmihaylov/AsyncUtils/badges/gpa.svg)](https://codeclimate.com/github/lexmihaylov/AsyncUtils)
 [![HitCount](https://hitt.herokuapp.com/lexmihaylov/AsyncUtils.svg)](https://github.com/lexmihaylov/AsyncUtils)
